@@ -1,0 +1,427 @@
+#!/usr/bin/sh
+
+# Headers - universal POSIX/SUS, present on all Linux (glibc+musl) and macOS
+ac_cv_header_stdio_h=yes
+ac_cv_header_stdlib_h=yes
+ac_cv_header_string_h=yes
+ac_cv_header_strings_h=yes
+ac_cv_header_inttypes_h=yes
+ac_cv_header_stdint_h=yes
+ac_cv_header_stddef_h=yes
+ac_cv_header_stdarg_h=yes
+ac_cv_header_unistd_h=yes
+ac_cv_header_sys_stat_h=yes
+ac_cv_header_sys_types_h=yes
+ac_cv_header_sys_param_h=yes
+ac_cv_header_sys_wait_h=yes
+ac_cv_header_sys_time_h=yes
+ac_cv_header_sys_times_h=yes
+ac_cv_header_sys_select_h=yes
+ac_cv_header_sys_mman_h=yes
+ac_cv_header_sys_resource_h=yes
+ac_cv_header_sys_utsname_h=yes
+ac_cv_header_termios_h=yes
+ac_cv_header_limits_h=yes
+ac_cv_header_fcntl_h=yes
+ac_cv_header_errno_h=yes
+ac_cv_header_locale_h=yes
+ac_cv_header_langinfo_h=yes
+ac_cv_header_wchar_h=yes
+ac_cv_header_iconv_h=yes
+ac_cv_header_poll_h=yes
+ac_cv_header_dlfcn_h=yes
+ac_cv_header_pwd_h=yes
+ac_cv_header_grp_h=yes
+ac_cv_header_memory_h=yes
+ac_cv_header_netinet_in_systm_h=yes
+ac_cv_header_dirent_h=yes
+ac_cv_header_utmp_h=yes
+ac_cv_header_utmpx_h=yes
+ac_cv_header_sys_xattr_h=yes
+ac_cv_header_termcap_h=yes
+ac_cv_header_curses_h=yes
+ac_cv_header_ncurses_h=yes
+ac_cv_header_ncursesw_ncurses_h=yes
+ac_cv_header_ncurses_ncurses_h=yes
+ac_cv_header_ncursesw_term_h=yes
+ac_cv_header_ncurses_term_h=yes
+ac_cv_header_term_h=yes
+
+# Headers - universally absent on Linux and macOS
+ac_cv_header_varargs_h=no
+ac_cv_header_dl_h=no
+ac_cv_header_libc_h=no
+ac_cv_header_sys_stropts_h=no
+ac_cv_header_sys_filio_h=no
+ac_cv_header_termio_h=no
+ac_cv_header_sys_capability_h=no
+ac_cv_header_pcre_h=no
+ac_cv_header_gdbm_h=no
+ac_cv_header_bind_netdb_h=no
+
+# Types - present on all targets
+ac_cv_type_pid_t=yes
+ac_cv_type_off_t=yes
+ac_cv_type_ino_t=yes
+ac_cv_type_mode_t=yes
+ac_cv_type_uid_t=yes
+ac_cv_type_gid_t=yes
+ac_cv_type_size_t=yes
+ac_cv_type_sigset_t=yes
+ac_cv_type_rlim_t=yes
+ac_cv_type_socklen_t=yes
+
+# Compiler capabilities - all true on any GCC/Clang on Tier 1 targets
+ac_cv_c_const=yes
+ac_cv_c_prototypes=yes
+ac_cv_c_vararrays=yes
+ac_cv_c_union_init=yes
+ac_cv_c_signed_to_unsigned_cast_broken=no
+
+# alloca
+ac_cv_working_alloca_h=yes
+ac_cv_func_alloca_works=yes
+
+# Standard POSIX functions - present on all Linux (glibc+musl) and macOS
+ac_cv_func_strftime=yes
+ac_cv_func_strptime=yes
+ac_cv_func_mktime=yes
+ac_cv_func_difftime=yes
+ac_cv_func_timelocal=yes
+ac_cv_func_gettimeofday=yes
+ac_cv_func_clock_gettime=yes
+ac_cv_func_select=yes
+ac_cv_func_poll=yes
+ac_cv_func_readlink=yes
+ac_cv_func_fchdir=yes
+ac_cv_func_fchmod=yes
+ac_cv_func_fchown=yes
+ac_cv_func_lchown=yes
+ac_cv_func_ftruncate=yes
+ac_cv_func_fstat=yes
+ac_cv_func_lstat=yes
+ac_cv_func_fseeko=yes
+ac_cv_func_ftello=yes
+ac_cv_func_mkfifo=yes
+ac_cv_func_mkstemp=yes
+ac_cv_func_waitpid=yes
+ac_cv_func_wait3=yes
+ac_cv_func_sigaction=yes
+ac_cv_func_sigblock=yes
+ac_cv_func_sighold=yes
+ac_cv_func_sigrelse=yes
+ac_cv_func_sigsetmask=yes
+ac_cv_func_sigprocmask=yes
+ac_cv_func_killpg=yes
+ac_cv_func_setpgid=yes
+ac_cv_func_setpgrp=yes
+ac_cv_func_tcsetpgrp=yes
+ac_cv_func_tcgetattr=yes
+ac_cv_func_nice=yes
+ac_cv_func_gethostname=yes
+ac_cv_func_gethostbyname2=yes
+ac_cv_func_inet_aton=yes
+ac_cv_func_inet_pton=yes
+ac_cv_func_inet_ntop=yes
+ac_cv_func_getlogin=yes
+ac_cv_func_getpagesize=yes
+ac_cv_func_getpwent=yes
+ac_cv_func_getpwnam=yes
+ac_cv_func_getpwuid=yes
+ac_cv_func_getgrgid=yes
+ac_cv_func_getgrnam=yes
+ac_cv_func_initgroups=yes
+ac_cv_func_setuid=yes
+ac_cv_func_seteuid=yes
+ac_cv_func_setreuid=yes
+ac_cv_func_setresuid=yes
+ac_cv_func_setsid=yes
+ac_cv_func_setgid=yes
+ac_cv_func_setegid=yes
+ac_cv_func_setregid=yes
+ac_cv_func_setresgid=yes
+ac_cv_func_memcpy=yes
+ac_cv_func_memmove=yes
+ac_cv_func_strstr=yes
+ac_cv_func_strerror=yes
+ac_cv_func_strtoul=yes
+ac_cv_func_getrlimit=yes
+ac_cv_func_getrusage=yes
+ac_cv_func_setlocale=yes
+ac_cv_func_isblank=yes
+ac_cv_func_iswblank=yes
+ac_cv_func_uname=yes
+ac_cv_func_tgamma=yes
+ac_cv_func_signgam=yes
+ac_cv_func_log2=yes
+ac_cv_func_scalbn=yes
+ac_cv_func_putenv=yes
+ac_cv_func_getenv=yes
+ac_cv_func_setenv=yes
+ac_cv_func_unsetenv=yes
+ac_cv_func_brk=yes
+ac_cv_func_sbrk=yes
+ac_cv_func_pathconf=yes
+ac_cv_func_sysconf=yes
+ac_cv_func_getcwd=yes
+ac_cv_func_realpath=yes
+ac_cv_func_symlink=yes
+ac_cv_func_regcomp=yes
+ac_cv_func_regexec=yes
+ac_cv_func_regerror=yes
+ac_cv_func_regfree=yes
+ac_cv_func_nanosleep=yes
+ac_cv_func_nl_langinfo=yes
+ac_cv_func_erand48=yes
+ac_cv_func_open_memstream=yes
+ac_cv_func_posix_openpt=yes
+ac_cv_func_wctomb=yes
+ac_cv_func_iconv=yes
+ac_cv_func_grantpt=yes
+ac_cv_func_unlockpt=yes
+ac_cv_func_ptsname=yes
+ac_cv_func_htons=yes
+ac_cv_func_ntohs=yes
+ac_cv_func_getxattr=yes
+ac_cv_func_canonicalize_file_name=yes
+ac_cv_func_prctl=yes
+ac_cv_func_setutxent=yes
+ac_cv_func_getutxent=yes
+ac_cv_func_endutxent=yes
+ac_cv_func_getutent=yes
+ac_cv_func_strcoll=yes
+ac_cv_func_isinf=yes
+ac_cv_func_isnan=yes
+ac_cv_func_dlopen=yes
+ac_cv_func_dlerror=yes
+ac_cv_func_dlsym=yes
+ac_cv_func_dlclose=yes
+ac_cv_func_tgetent=yes
+ac_cv_func_tigetflag=yes
+ac_cv_func_tigetnum=yes
+ac_cv_func_tigetstr=yes
+ac_cv_func_setupterm=yes
+ac_cv_func_initscr=yes
+ac_cv_func_resize_term=yes
+ac_cv_func_getcchar=yes
+ac_cv_func_setcchar=yes
+ac_cv_func_waddwstr=yes
+ac_cv_func_wget_wch=yes
+ac_cv_func_win_wch=yes
+ac_cv_func_use_default_colors=yes
+ac_cv_func_mmap=yes
+ac_cv_func_munmap=yes
+ac_cv_func_msync=yes
+ac_cv_func_brk_proto=yes
+ac_cv_func_sbrk_proto=yes
+ac_cv_func_mknod_proto=yes
+ac_cv_func_ioctl_proto=yes
+
+# Multibyte/wchar - complete on all targets
+ac_cv_func_iswalnum=yes
+ac_cv_func_iswcntrl=yes
+ac_cv_func_iswdigit=yes
+ac_cv_func_iswgraph=yes
+ac_cv_func_iswlower=yes
+ac_cv_func_iswprint=yes
+ac_cv_func_iswpunct=yes
+ac_cv_func_iswspace=yes
+ac_cv_func_iswupper=yes
+ac_cv_func_iswxdigit=yes
+ac_cv_func_mbrlen=yes
+ac_cv_func_mbrtowc=yes
+ac_cv_func_towupper=yes
+ac_cv_func_towlower=yes
+ac_cv_func_wcschr=yes
+ac_cv_func_wcscpy=yes
+ac_cv_func_wcslen=yes
+ac_cv_func_wcsncmp=yes
+ac_cv_func_wcsncpy=yes
+ac_cv_func_wcrtomb=yes
+ac_cv_func_wcwidth=yes
+ac_cv_func_wmemchr=yes
+ac_cv_func_wmemcmp=yes
+ac_cv_func_wmemcpy=yes
+ac_cv_func_wmemmove=yes
+ac_cv_func_wmemset=yes
+
+# Functions - universally absent on Linux and macOS
+ac_cv_func_faccessx=no
+ac_cv_func_getipnodebyname=no
+ac_cv_func_nis_list=no
+ac_cv_func_setproctitle=no
+ac_cv_func_srand_deterministic=no
+ac_cv_func_cygwin_conv_path=no
+ac_cv_func_xw=no
+ac_cv_func__mktemp=no
+ac_cv_func_load=no
+ac_cv_func_loadquery=no
+ac_cv_func_loadbind=no
+ac_cv_func_unload=no
+ac_cv_func_shl_load=no
+ac_cv_func_shl_unload=no
+ac_cv_func_shl_findsym=no
+ac_cv_func_pcre_compile=no
+ac_cv_func_pcre_study=no
+ac_cv_func_pcre_exec=no
+ac_cv_func_gdbm_open=no
+ac_cv_func_cap_get_proc=no
+
+# struct members - universal on Linux and macOS
+ac_cv_member_struct_dirent_d_ino=yes
+ac_cv_member_struct_dirent_d_stat=no
+ac_cv_member_struct_rusage_ru_maxrss=yes
+ac_cv_member_struct_rusage_ru_ixrss=yes
+ac_cv_member_struct_rusage_ru_idrss=yes
+ac_cv_member_struct_rusage_ru_isrss=yes
+ac_cv_member_struct_rusage_ru_minflt=yes
+ac_cv_member_struct_rusage_ru_majflt=yes
+ac_cv_member_struct_rusage_ru_nswap=yes
+ac_cv_member_struct_rusage_ru_inblock=yes
+ac_cv_member_struct_rusage_ru_oublock=yes
+ac_cv_member_struct_rusage_ru_msgsnd=yes
+ac_cv_member_struct_rusage_ru_msgrcv=yes
+ac_cv_member_struct_rusage_ru_nsignals=yes
+ac_cv_member_struct_rusage_ru_nvcsw=yes
+ac_cv_member_struct_rusage_ru_nivcsw=yes
+ac_cv_member_struct_sockaddr_in6_sin6_scope_id=yes
+ac_cv_member_struct_utmp_ut_host=yes
+ac_cv_member_struct_utmpx_ut_host=yes
+ac_cv_member_struct_utmpx_ut_tv=yes
+ac_cv_member_struct_utmpx_ut_xtime=no
+ac_cv_have_struct_utmp=yes
+ac_cv_have_struct_utmpx=yes
+ac_cv_have_struct_timespec=yes
+ac_cv_have_struct_timezone=yes
+
+# struct stat nanosecond timestamps - split by platform
+# Linux (glibc + musl): st_atim.tv_nsec / st_mtim.tv_nsec / st_ctim.tv_nsec
+# macOS:                st_atimespec.tv_nsec / st_mtimespec.tv_nsec / st_ctimespec.tv_nsec
+case "$TARGET" in
+  *-linux-)
+    ac_cv_member_struct_stat_st_atim_tv_nsec=yes
+    ac_cv_member_struct_stat_st_mtim_tv_nsec=yes
+    ac_cv_member_struct_stat_st_ctim_tv_nsec=yes
+    ac_cv_member_struct_stat_st_atimespec_tv_nsec=no
+    ac_cv_member_struct_stat_st_mtimespec_tv_nsec=no
+    ac_cv_member_struct_stat_st_ctimespec_tv_nsec=no
+    ac_cv_member_struct_stat_st_atimensec=no
+    ac_cv_member_struct_stat_st_mtimensec=no
+    ac_cv_member_struct_stat_st_ctimensec=no
+    ;;
+  *-apple-darwin)
+    ac_cv_member_struct_stat_st_atim_tv_nsec=no
+    ac_cv_member_struct_stat_st_mtim_tv_nsec=no
+    ac_cv_member_struct_stat_st_ctim_tv_nsec=no
+    ac_cv_member_struct_stat_st_atimespec_tv_nsec=yes
+    ac_cv_member_struct_stat_st_mtimespec_tv_nsec=yes
+    ac_cv_member_struct_stat_st_ctimespec_tv_nsec=yes
+    ac_cv_member_struct_stat_st_atimensec=no
+    ac_cv_member_struct_stat_st_mtimensec=no
+    ac_cv_member_struct_stat_st_ctimensec=no
+    ;;
+esac
+
+# xattr style - Linux vs macOS
+case "$TARGET" in
+  *-linux-)
+    zsh_cv_getxattr_linux=yes
+    ;;
+  *-apple-darwin)
+    zsh_cv_getxattr_linux=no
+    ;;
+esac
+
+# /dev/fd path - platform specific
+case "$TARGET" in
+  *-linux-)
+    ac_cv_path_dev_fd=/proc/self/fd
+    ;;
+  *-apple-darwin)
+    ac_cv_path_dev_fd=/dev/fd
+    ;;
+esac
+
+# RLIMIT macros - Linux glibc/musl yes, macOS no for the Linux-specific ones
+case "$TARGET" in
+  *-linux-)
+    ac_cv_have_rlimit_as=yes
+    ac_cv_have_rlimit_locks=yes
+    ac_cv_have_rlimit_memlock=yes
+    ac_cv_have_rlimit_nproc=yes
+    ac_cv_have_rlimit_nofile=yes
+    ac_cv_have_rlimit_rss=yes
+    ac_cv_have_rlimit_sigpending=yes
+    ac_cv_have_rlimit_msgqueue=yes
+    ac_cv_have_rlimit_nice=yes
+    ac_cv_have_rlimit_rtprio=yes
+    ac_cv_have_rlimit_rttime=yes
+    ac_cv_have_rlimit_vmem=no
+    ac_cv_have_rlimit_sbsize=no
+    ac_cv_have_rlimit_npts=no
+    ac_cv_have_rlimit_swap=no
+    ac_cv_have_rlimit_kqueues=no
+    ac_cv_have_rlimit_umtxp=no
+    ac_cv_have_rlimit_nthr=no
+    ac_cv_have_rlimit_pthread=no
+    ac_cv_have_rlimit_posixlocks=no
+    ac_cv_have_rlimit_aio_mem=no
+    ac_cv_have_rlimit_aio_ops=no
+    ac_cv_have_rlimit_tcache=no
+    ;;
+  *-apple-darwin)
+    ac_cv_have_rlimit_as=yes
+    ac_cv_have_rlimit_nofile=yes
+    ac_cv_have_rlimit_rss=yes
+    ac_cv_have_rlimit_memlock=yes
+    ac_cv_have_rlimit_nproc=yes
+    ac_cv_have_rlimit_locks=no
+    ac_cv_have_rlimit_sigpending=no
+    ac_cv_have_rlimit_msgqueue=no
+    ac_cv_have_rlimit_nice=no
+    ac_cv_have_rlimit_rtprio=no
+    ac_cv_have_rlimit_rttime=no
+    ac_cv_have_rlimit_vmem=no
+    ac_cv_have_rlimit_sbsize=no
+    ac_cv_have_rlimit_npts=no
+    ac_cv_have_rlimit_swap=no
+    ac_cv_have_rlimit_kqueues=no
+    ac_cv_have_rlimit_umtxp=no
+    ac_cv_have_rlimit_nthr=no
+    ac_cv_have_rlimit_pthread=no
+    ac_cv_have_rlimit_posixlocks=no
+    ac_cv_have_rlimit_aio_mem=no
+    ac_cv_have_rlimit_aio_ops=no
+    ac_cv_have_rlimit_tcache=no
+    ;;
+esac
+
+# Libraries
+ac_cv_lib_m_pow=yes
+ac_cv_lib_dl_dlopen=yes
+ac_cv_lib_rt_clock_gettime=yes
+ac_cv_lib_socket_socket=no
+ac_cv_lib_gdbm_gdbm_open=no
+ac_cv_lib_cap_cap_get_proc=no
+
+# Compiler/ABI properties - true on all 64-bit Tier 1 targets
+ac_cv_c_long_64=yes
+ac_cv_printf_lld=yes
+ac_cv_getpgrp_void=yes
+
+# These are left to probe - behavioral or environment-sensitive:
+#   zsh_cv_sys_fifo
+#   zsh_cv_func_link
+#   zsh_cv_func_kill_esrch
+#   zsh_cv_func_sigsuspend
+#   zsh_cv_func_tcsetpgrp
+#   zsh_cv_sys_getpwnam_faked
+#   zsh_cv_func_getcwd_native
+#   zsh_cv_func_realpath_null
+#   zsh_cv_func_getcwd_malloc
+#   zsh_cv_sys_nis
+#   zsh_cv_termcap_tgetent_null
+#   zsh_cv_termcap_tgetent_ret
+#   zsh_cv_func_lseek_shin
+#   zsh_cv_func_getpgrp_void (zsh internal, distinct from ac_ above)
+#   zsh_cv_header_termcap_ospeed

@@ -1,0 +1,32 @@
+[package]
+name = "zsh-src"
+version = "0.1.0"
+authors = ["Cole McAnelly <cole.mcanelly3@gmail.com>"]
+license = "MIT OR Apache-2.0"
+readme="README.md"
+repository = "https://github.com/zsh-rs/zsh-src"
+edition = "2024"
+description = """
+Source of ZSH and logic to build it.
+"""
+
+[dependencies]
+directories = { version = "6.0.0", optional = true }
+file-guard = { version = "0.2.0", optional = true }
+tar = { version = "0.4.45", optional = true }
+ureq = { version = "3.3.0", optional = true }
+xz2 = { version = "0.1.7", optional = true }
+
+
+
+[features]
+default = ["download"]
+
+download = [
+  "directories",
+  "file-guard",
+  "tar",
+  "ureq",
+  "xz2",
+]
+# system = [] TODO: Add a feature to use the system's ZSH installation instead of downloading and building it.
