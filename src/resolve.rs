@@ -1,17 +1,19 @@
 use std::io;
 use std::process::Command;
 
-use crate::cache::CacheDir;
-use crate::headers::ZshSource;
+use crate::download::ZshSourceDownloader;
+use crate::source::ZshSource;
 
 #[cfg(feature = "download")]
 pub fn resolve() -> io::Result<ZshSource> {
     let version = get_zsh_version();
 
-    Ok(CacheDir::new()
-        .download(&version)?
+    Ok(ZshSourceDownloader::new()
+        .lock_version(version)?
+        .download()?
         .extract()?
-        .ensure_headers())
+        .ensure_headers()
+        .into())
 }
 
 fn get_zsh_version() -> String {

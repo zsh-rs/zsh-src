@@ -1,58 +1,131 @@
 use std::fs;
 use std::io;
+use std::ops::Not;
 use std::path::PathBuf;
 
-use crate::cache::CacheDir;
-use crate::headers::ZshSource;
+use directories::ProjectDirs;
+use file_guard::{FileGuard, Lock};
+use ureq;
+use xz2;
+use tar;
 
+use crate::commands;
 
-impl CacheDir {
-    pub(crate) fn download<'a>(self, version: &'a str) -> io::Result<ZshDownload<'a>> {
+const APP_NAME: &str = "zsh-src";
+const ORG_NAME: &str = "zsh-rs";
+const QUALIFIER: &str = "dev";
+
+pub struct ZshSourceDownloader {
+    root: PathBuf,
+    pub(super) version: Option<String>,
+    tarball: Option<PathBuf>,
+    pub(super) source: Option<PathBuf>,
+    _lock: Option<FileGuard<Box<fs::File>>>,
+}
+
+impl ZshSourceDownloader {
+    pub(super) fn new() -> Self {
+        let proj = ProjectDirs::from(QUALIFIER, ORG_NAME, APP_NAME).expect("no cache dir");
+
+        let dir = proj.cache_dir();
+
+        println!("cache dir: {}", dir.display());
+
+        std::fs::create_dir_all(dir).unwrap();
+        ZshSourceDownloader {
+            root: dir.to_path_buf(),
+            version: None,
+            tarball: None,
+            _lock: None,
+            source: None,
+        }
+    }
+
+    pub(super) fn lock_version(mut self, version: String) -> io::Result<Self> {
+        let lock_file = self.root.join(format!("zsh-{}.lock", version));
+        let file = Box::new(
+            fs::OpenOptions::new()
+                .read(true)
+                .write(true)
+                .create(true)
+                .open(lock_file)?,
+        );
+
+        self.version = Some(version);
+        self._lock = Some(file_guard::lock(file, Lock::Exclusive, 0, 1)?);
+
+        Ok(self)
+    }
+
+    pub(super) fn download<'a>(mut self) -> io::Result<Self> {
+        let version = self
+            .version
+            .as_ref()
+            .expect("must lock version before downloading");
+
         let name = format!("zsh-{}.tar.xz", version);
-        let tarball = self.root.join(&name);
+        self.tarball = Some(self.root.join(&name));
+        let tarball = self.tarball.as_ref().unwrap();
 
         if tarball.exists() {
-            return Ok(ZshDownload::new(self, tarball, version));
+            return Ok(self);
         }
 
         let url = format!("https://www.zsh.org/pub/{}", name);
-
         let mut res = ureq::get(&url).call().map_err(|e| e.into_io())?;
-
         let mut out = fs::File::create(&tarball)?;
-
         io::copy(&mut res.body_mut().as_reader(), &mut out)?;
 
-        Ok(ZshDownload::new(self, tarball, version))
-    }
-}
-
-pub(crate) struct ZshDownload<'a> {
-    root: PathBuf,
-    tarball: PathBuf,
-    version: &'a str,
-}
-
-impl<'a> ZshDownload<'a> {
-    pub(crate) fn new(downloader: CacheDir, tarball: PathBuf, version: &'a str) -> Self {
-        Self {
-            root: downloader.root,
-            tarball,
-            version,
-        }
+        Ok(self)
     }
 
-    pub(crate) fn extract(&self) -> io::Result<ZshSource> {
-        let out_dir = self.root.join(format!("zsh-{}", self.version));
+    pub(super) fn extract(mut self) -> io::Result<Self> {
+        let version = self
+            .version
+            .as_ref()
+            .expect("must lock version before downloading");
+        let tarball = self
+            .tarball
+            .as_ref()
+            .expect("must be downloaded before extracting");
+
+        self.source = Some(self.root.join(format!("zsh-{}", version)));
+        let out_dir = self.source.as_ref().unwrap();
 
         if out_dir.exists() {
-            return Ok(ZshSource::new(self.version, out_dir));
+            return Ok(self);
         }
 
-        let file = fs::File::open(&self.tarball)?;
+        let file = fs::File::open(tarball)?;
         let decompressor = xz2::read::XzDecoder::new(file);
         tar::Archive::new(decompressor).unpack(&out_dir)?;
 
-        Ok(ZshSource::new(self.version, out_dir))
+        Ok(self)
+    }
+
+    pub(super) fn ensure_headers(self) -> Self {
+        let source = self
+            .source
+            .as_ref()
+            .expect("must be extracted before ensuring headers");
+        let complete_marker = source.join(".complete");
+
+        if complete_marker.exists() {
+            return self;
+        }
+
+        source
+            .join("./configure")
+            .exists()
+            .not()
+            .then(|| commands::autoreconf(&source));
+
+        commands::configure(&source);
+        commands::make_prep(&source);
+        commands::make_headers(&source);
+
+        std::fs::write(&complete_marker, b"ok").unwrap();
+
+        self
     }
 }
