@@ -29,7 +29,7 @@ impl ZshSourceDownloader {
 
         let dir = proj.cache_dir();
 
-        println!("cache dir: {}", dir.display());
+        println!("[zsh-src] cache dir: {}", dir.display());
 
         std::fs::create_dir_all(dir).unwrap();
         ZshSourceDownloader {
@@ -71,6 +71,8 @@ impl ZshSourceDownloader {
             return Ok(self);
         }
 
+        println!("[zsh-src] downloading: {name}");
+
         let url = format!("https://www.zsh.org/pub/{}", name);
         let mut res = ureq::get(&url).call().map_err(|e| e.into_io())?;
         let mut out = fs::File::create(&tarball)?;
@@ -96,6 +98,8 @@ impl ZshSourceDownloader {
             return Ok(self);
         }
 
+        println!("[zsh-src] extracting: {} to {}", tarball.display(), out_dir.display());
+
         let file = fs::File::open(tarball)?;
         let decompressor = xz2::read::XzDecoder::new(file);
         tar::Archive::new(decompressor).unpack(&out_dir)?;
@@ -113,6 +117,8 @@ impl ZshSourceDownloader {
         if complete_marker.exists() {
             return self;
         }
+
+        println!("[zsh-src] ensuring headers for: {}", source.display());
 
         source
             .join("./configure")

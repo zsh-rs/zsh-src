@@ -8,6 +8,8 @@ use crate::source::ZshSource;
 pub fn resolve() -> io::Result<ZshSource> {
     let version = get_zsh_version();
 
+    println!("[zsh-src] zsh version: {}", version);
+
     Ok(ZshSourceDownloader::new()
         .lock_version(version)?
         .download()?
@@ -18,12 +20,13 @@ pub fn resolve() -> io::Result<ZshSource> {
 
 fn get_zsh_version() -> String {
     let output = Command::new("zsh")
-        .arg("-fc")
-        .arg("'echo $ZSH_VERSION'")
+        .arg("-f")
+        .arg("-c")
+        .arg("echo $ZSH_VERSION")
         .output()
         .expect("failed to run zsh");
 
-    String::from_utf8(output.stdout).unwrap()
+    String::from_utf8(output.stdout).unwrap().trim().to_string()
     // let stdout = String::from_utf8(output.stdout).unwrap();
 
     // Example: "zsh 5.9 (x86_64-pc-linux-gnu)"
