@@ -98,11 +98,11 @@ impl ZshSourceDownloader {
             return Ok(self);
         }
 
-        println!("[zsh-src] extracting: {} to {}", tarball.display(), out_dir.display());
+        println!("[zsh-src] extracting: {} into {}", tarball.display(), out_dir.display());
 
         let file = fs::File::open(tarball)?;
         let decompressor = xz2::read::XzDecoder::new(file);
-        tar::Archive::new(decompressor).unpack(&out_dir)?;
+        tar::Archive::new(decompressor).unpack(&self.root)?;
 
         Ok(self)
     }
