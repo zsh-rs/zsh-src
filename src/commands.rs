@@ -16,6 +16,7 @@ pub(super) fn configure(src: &Path) {
     cmd.arg("--without-tcsetpgrp");
 
     cmd
+        .arg("--disable-dynamic")
         .env("CONFIG_SITE", config_site.display().to_string())
         .current_dir(src)
         .run()
