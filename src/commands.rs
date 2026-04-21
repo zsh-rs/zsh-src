@@ -6,11 +6,16 @@ pub(super) fn autoreconf(src: &Path) {
     Command::new("autoreconf").arg("-fi").current_dir(src).run()
 }
 
-// Run configure out-of-tree — produces config.h, Makefiles, signames.h, etc.
+/// Run configure out-of-tree — produces config.h, Makefiles, signames.h, etc.
 pub(super) fn configure(src: &Path) {
     let config_site = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("config/config.site");
 
-    Command::new(src.join("configure").canonicalize().unwrap())
+    let mut cmd = Command::new(src.join("configure").canonicalize().unwrap());
+
+    #[cfg(ci)]
+    cmd.arg("--without-tcsetpgrp");
+
+    cmd
         .env("CONFIG_SITE", config_site.display().to_string())
         .current_dir(src)
         .run()
