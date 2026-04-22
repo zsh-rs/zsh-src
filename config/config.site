@@ -35,16 +35,11 @@ ac_cv_header_grp_h=yes
 ac_cv_header_memory_h=yes
 ac_cv_header_netinet_in_systm_h=yes
 ac_cv_header_dirent_h=yes
-ac_cv_header_utmp_h=yes
 ac_cv_header_utmpx_h=yes
 ac_cv_header_sys_xattr_h=yes
 ac_cv_header_termcap_h=yes
 ac_cv_header_curses_h=yes
 ac_cv_header_ncurses_h=yes
-ac_cv_header_ncursesw_ncurses_h=yes
-ac_cv_header_ncurses_ncurses_h=yes
-ac_cv_header_ncursesw_term_h=yes
-ac_cv_header_ncurses_term_h=yes
 ac_cv_header_term_h=yes
 
 # Headers - universally absent on Linux and macOS
@@ -52,12 +47,31 @@ ac_cv_header_varargs_h=no
 ac_cv_header_dl_h=no
 ac_cv_header_libc_h=no
 ac_cv_header_sys_stropts_h=no
-ac_cv_header_sys_filio_h=no
 ac_cv_header_termio_h=no
 ac_cv_header_sys_capability_h=no
 ac_cv_header_pcre_h=no
 ac_cv_header_gdbm_h=no
 ac_cv_header_bind_netdb_h=no
+
+# Headers - platform-specific presence
+case "$TARGET" in
+  *-linux-)
+    ac_cv_header_ncursesw_ncurses_h=yes
+    ac_cv_header_ncursesw_term_h=yes
+    ac_cv_header_ncurses_ncurses_h=yes
+    ac_cv_header_ncurses_term_h=yes
+    ac_cv_header_utmp_h=yes
+    ac_cv_header_sys_filio_h=no
+    ;;
+  *-apple-darwin)
+    ac_cv_header_ncursesw_ncurses_h=no
+    ac_cv_header_ncursesw_term_h=no
+    ac_cv_header_ncurses_ncurses_h=no
+    ac_cv_header_ncurses_term_h=no
+    ac_cv_header_sys_filio_h=yes
+    # ac_cv_header_utmp_h: omit, let configure probe — too SDK-version-dependent to cache safely
+    ;;
+esac
 
 # Types - present on all targets
 ac_cv_type_pid_t=yes
@@ -399,10 +413,20 @@ esac
 # Libraries
 ac_cv_lib_m_pow=yes
 ac_cv_lib_dl_dlopen=yes
-ac_cv_lib_rt_clock_gettime=yes
 ac_cv_lib_socket_socket=no
 ac_cv_lib_gdbm_gdbm_open=no
 ac_cv_lib_cap_cap_get_proc=no
+
+# Library functions - platform-specific presence
+case "$host_os" in
+  linux*)
+    ac_cv_lib_rt_clock_gettime=yes
+    ;;
+  darwin*)
+    ac_cv_lib_rt_clock_gettime=no
+    ;;
+esac
+
 
 # Compiler/ABI properties - true on all 64-bit Tier 1 targets
 ac_cv_c_long_64=yes
