@@ -27,12 +27,4 @@ fn get_zsh_version() -> String {
         .expect("failed to run zsh");
 
     String::from_utf8(output.stdout).unwrap().trim().to_string()
-    // let stdout = String::from_utf8(output.stdout).unwrap();
-
-    // Example: "zsh 5.9 (x86_64-pc-linux-gnu)"
-    // stdout
-    //     .split_whitespace()
-    //     .nth(1)
-    //     .expect("failed to parse zsh version")
-    //     .to_string()
 }
